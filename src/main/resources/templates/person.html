@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Cast Group - Person</title>
+<link
+	href="https://unpkg.com/bootstrap@3.4.0/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="/person.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+		<h1>Person</h1>
+		<main id="app"> <router-view></router-view> </main>
+	</div>
+
+	<template id="person">
+
+	<div>
+		<h2>{{ person.id }}</h2>
+		<b>Name: </b>
+		<div>{{ person.name }}</div>
+		<b>Street:</b>
+		<div>{{ person.street }}</div>
+		<b>Number:</b>
+		<div>{{ person.number }}</div>
+		<br /> <b>Neighborhood:</b>
+		<div>{{person.neighborhood}}</div>
+		<b>City:</b>
+		<div>{{person.city}}</div>
+		<b>State:</b>
+		<div>{{person.state}}</div>
+		<br> <b>Cellphone:</b>
+		<div>{{person.cellphone}}</div>
+		<b>Phone:</b>
+		<div>{{person.phone}}</div>
+
+		<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+		<a> <router-link to="/">Back to person list</router-link>
+		</a>
+	</div>
+	</template>
+
+	<template id="person-list">
+	<div>
+		<div class="actions">
+			<a class="btn btn-default"> <router-link
+					:to="{path: '/add-person'}"> <span
+					class="glyphicon glyphicon-plus"></span> Add person </router-link>
+			</a>
+		</div>
+		<div class="filters row">
+			<div class="form-group col-sm-3">
+				<input placeholder="Search Name" v-model="searchKey" class="form-control"
+					id="search-element" requred />
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Street</th>
+					<th>Number</th>
+					<th>Neighborhood</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Cellphone</th>
+					<th>Phone</th>
+
+					<th class="col-sm-2">Actions</th>
+
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="person in filteredpersons">
+					<td><a> <router-link
+								:to="{name: 'person', params: {person_id: person.id}}">{{
+							person.name }}</router-link>
+					</a></td>
+					<td>{{ person.street }}</td>
+					<td>{{ person.number }}</td>
+					<td>{{ person.neighborhood }}</td>
+					<td>{{ person.city }}</td>
+					<td>{{ person.state }}</td>
+					<td>{{ person.cellphone }}</td>
+					<td>{{ person.phone }}</td>
+					<td><a class="btn btn-warning btn-xs"> <router-link
+								:to="{name: 'person-edit', params: {person_id: person.id}}">Edit</router-link>
+					</a> <a class="btn btn-danger btn-xs"> <router-link
+								:to="{name: 'person-delete', params: {person_id: person.id}}">Delete</router-link>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</template>
+
+
+	<template id="add-person">
+	<div>
+		<h2>Add new person</h2>
+		<form @submit="createperson">
+			<div class="form-group">
+				<label for="add-name">Name</label> <input class="form-control"
+					id="add-name" v-model="person.name" required />
+			</div>
+
+			<div class="form-group">
+				<label for="add-street">Street</label>
+				<textarea class="form-control" id="add-street" rows="10"
+					v-model="person.street"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="add-number">Number </label> <input type="text"
+					class="form-control" id="add-number" v-model="person.number" />
+			</div>
+			<div class="form-group">
+				<label for="add-neighborhood">Neighborhood </label> <input
+					type="text" class="form-control" id="add-neighborhood"
+					v-model="person.neighborhood" />
+			</div>
+			<div class="form-group">
+				<label for="add-city">City </label> <input type="text"
+					class="form-control" id="add-city" v-model="person.city" />
+			</div>
+			<div class="form-group">
+				<label for="add-state">State </label> <input type="text"
+					class="form-control" id="add-state" v-model="person.state" />
+			</div>
+			<div class="form-group">
+				<label for="add-cellphone">Cellphone </label> <input type="text"
+					class="form-control" id="add-cellphone" v-model="person.cellphone" />
+			</div>
+			<div class="form-group">
+				<label for="add-phone">Phone </label> <input type="text"
+					class="form-control" id="add-phone" v-model="person.phone" />
+			</div>
+
+			<button type="submit" class="btn btn-primary">Create</button>
+			<a class="btn btn-default"> <router-link to="/">Cancel</router-link>
+			</a>
+		</form>
+	</div>
+	</template>
+
+	<template id="person-edit">
+	<div>
+		<h2>Edit person</h2>
+		<form @submit="updateperson">
+			<div class="form-group">
+				<label for="edit-name">Name</label> <input class="form-control"
+					id="edit-name" v-model="person.name" required />
+			</div>
+
+			<div class="form-group">
+				<label for="edit-street">Street</label>
+				<textarea class="form-control" id="edit-street" rows="10"
+					v-model="person.street"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="edit-number">Number </span></label> <input type="text"
+					class="form-control" id="edit-number" v-model="person.number" />
+			</div>
+			<div class="form-group">
+				<label for="edit-neighborhood">Neighborhood </label> <input
+					type="text" class="form-control" id="edit-neighborhood"
+					v-model="person.neighborhood" />
+			</div>
+			<div class="form-group">
+				<label for="edit-city">City </label> <input type="text"
+					class="form-control" id="edit-city" v-model="person.city" />
+			</div>
+			<div class="form-group">
+				<label for="edit-state">State </label> <input type="text"
+					class="form-control" id="edit-state" v-model="person.state" />
+			</div>
+			<div class="form-group">
+				<label for="edit-cellphone">Cellphone </label> <input type="text"
+					class="form-control" id="edit-cellphone" v-model="person.cellphone" />
+			</div>
+			<div class="form-group">
+				<label for="edit-phone">Phone </label> <input type="text"
+					class="form-control" id="edit-phone" v-model="person.phone" />
+			</div>
+
+			<button type="submit" class="btn btn-primary">Update</button>
+			<a class="btn btn-default"> <router-link to="/">Cancel</router-link>
+			</a>
+		</form>
+	</div>
+	</template>
+
+	<template id="person-delete">
+	<div>
+		<h2>Delete person {{ person.name }}</h2>
+		<form @submit="deleteperson">
+			<p>The action cannot be undone.</p>
+			<button type="submit" class="btn btn-danger">Delete</button>
+			<a class="btn btn-default"> <router-link to="/">Cancel</router-link>
+			</a>
+		</form>
+	</div>
+	</template>
+
+	<script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>
+	<script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>
+	<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+	<script src="/person.js"></script>
+
+</body>
+</html>

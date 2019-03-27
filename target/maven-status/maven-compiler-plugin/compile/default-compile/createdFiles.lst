@@ -1,0 +1,6 @@
+br\com\ana\cast\controller\PersonController.class
+br\com\ana\cast\vo\Person.class
+br\com\ana\cast\PersonRestApi.class
+br\com\ana\cast\service\PersonService.class
+br\com\ana\cast\PersonApi.class
+br\com\ana\cast\repository\PersonRespository.class
